@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cley HelpMe</string>
+    <string name="title_activity_main">Cley HelpMe</string>
+    <string name="package_name">com.cley.helpme</string>
+    <string name="custom_url_scheme">com.cley.helpme</string>
+</resources>

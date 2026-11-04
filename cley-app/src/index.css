@@ -1,0 +1,238 @@
+:root {
+  color-scheme: light;
+  --font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-scale: 1;
+
+  /* Paleta Gerontológica WCAG 2.1 AAA */
+  --color-bg: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-primary: #D9480F;
+  --color-primary-dark: #B83A09;
+  --color-primary-light: #FFE8CC;
+  --color-success: #15803D;
+  --color-success-light: #DCFCE7;
+  --color-danger: #DC2626;
+  --color-danger-light: #FEE2E2;
+  --color-warning: #B45309;
+  --color-warning-light: #FEF3C7;
+  
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #1E293B;
+  --color-text-muted: #64748B;
+  --color-border: #CBD5E1;
+
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  background-color: #0F172A;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Clases de escala de fuente para adultos mayores */
+body.font-normal {
+  --font-scale: 1;
+}
+
+body.font-grande {
+  --font-scale: 1.25;
+}
+
+body.font-gigante {
+  --font-scale: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0F172A;
+}
+
+#root {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Espaciado de seguridad superior generoso para notch y barra de estado */
+  padding-top: max(env(safe-area-inset-top, 0px), 54px);
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 32px);
+  padding-left: max(env(safe-area-inset-left, 0px), 18px);
+  padding-right: max(env(safe-area-inset-right, 0px), 18px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 480px) {
+  #root {
+    max-width: 100%;
+    box-shadow: none;
+    padding-top: max(env(safe-area-inset-top, 0px), 56px);
+  }
+}
+
+/* Tipografía dinámica escalable */
+h1 {
+  font-size: calc(26px * var(--font-scale, 1));
+  line-height: 1.3;
+  margin: 0 0 10px 0;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+h2 {
+  font-size: calc(22px * var(--font-scale, 1));
+  line-height: 1.35;
+  margin: 0 0 10px 0;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+h3 {
+  font-size: calc(20px * var(--font-scale, 1));
+  line-height: 1.4;
+  margin: 0 0 8px 0;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+p, span, label {
+  font-size: calc(18px * var(--font-scale, 1));
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+/* Clases de utilidad de texto de alto contraste */
+.text-scaled-title {
+  font-size: calc(25px * var(--font-scale, 1)) !important;
+  line-height: 1.25 !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+
+.text-scaled-heading {
+  font-size: calc(21px * var(--font-scale, 1)) !important;
+  line-height: 1.35 !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+
+.text-scaled-body {
+  font-size: calc(18px * var(--font-scale, 1)) !important;
+  line-height: 1.5 !important;
+  color: #1E293B !important;
+}
+
+.text-scaled-large {
+  font-size: calc(20px * var(--font-scale, 1)) !important;
+  line-height: 1.45 !important;
+  color: #0F172A !important;
+}
+
+.text-scaled-small {
+  font-size: calc(15px * var(--font-scale, 1)) !important;
+  line-height: 1.4 !important;
+  color: #475569 !important;
+}
+
+/* Botones accesibles estándar (Mínimo 58px de altura escalable) */
+button {
+  font-family: var(--font-family);
+  font-size: calc(18px * var(--font-scale, 1));
+  font-weight: 700;
+  min-height: calc(56px * var(--font-scale, 1));
+  padding: 12px 18px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.1s ease, filter 0.15s ease;
+  user-select: none;
+}
+
+/* Asegurar que las etiquetas y textos dentro de botones respeten el color del botón */
+button span, button p, button label, button div {
+  color: inherit !important;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #FFFFFF !important;
+}
+
+.btn-primary:active {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: #FFFFFF !important;
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: #FFFFFF !important;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2.5px solid var(--color-primary);
+  color: var(--color-primary) !important;
+}
+
+.btn-card {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-primary) !important;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Inputs de texto súper legibles para personas mayores */
+input, textarea, select {
+  font-family: var(--font-family);
+  font-size: calc(20px * var(--font-scale, 1));
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px solid var(--color-border);
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  width: 100%;
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Scrollbar sutil */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}

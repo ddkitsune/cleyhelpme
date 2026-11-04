@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cley's HelpMe - App Interactiva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cley_estilos.css" />
+</head>
+<body>
+
+  <!-- Avatar SVG de Cley (Cabello castaño, lentes, camiseta blanca saludando) -->
+  <svg class="svg-definitions">
+    <symbol id="cley-avatar" viewBox="0 0 200 200">
+      <path d="M45 75 C35 120 40 165 65 175 L135 175 C160 165 165 120 155 75 C150 40 130 25 100 25 C70 25 50 40 45 75 Z" fill="#4A2C1D"/>
+      <path d="M62 152 C62 140 138 140 138 152 L148 195 L52 195 Z" fill="#FFFFFF" stroke="#DCE2E8" stroke-width="3"/>
+      <rect x="88" y="130" width="24" height="22" rx="8" fill="#F6C8A6"/>
+      <g transform="translate(18, 108) rotate(-20)">
+        <rect x="12" y="25" width="14" height="32" rx="7" fill="#F6C8A6"/>
+        <circle cx="19" cy="20" r="12" fill="#F6C8A6"/>
+      </g>
+      <circle cx="100" cy="92" r="44" fill="#FAD4B8"/>
+      <ellipse cx="72" cy="104" rx="7" ry="4" fill="#F4978E" opacity="0.55"/>
+      <ellipse cx="128" cy="104" rx="7" ry="4" fill="#F4978E" opacity="0.55"/>
+      <circle cx="80" cy="90" r="9.5" fill="#3B2214"/>
+      <circle cx="120" cy="90" r="9.5" fill="#3B2214"/>
+      <circle cx="77" cy="87" r="3" fill="#FFFFFF"/>
+      <circle cx="117" cy="87" r="3" fill="#FFFFFF"/>
+      <rect x="61" y="76" width="36" height="27" rx="8" fill="none" stroke="#2D1B12" stroke-width="4.5"/>
+      <rect x="103" y="76" width="36" height="27" rx="8" fill="none" stroke="#2D1B12" stroke-width="4.5"/>
+      <line x1="97" y1="88" x2="103" y2="88" stroke="#2D1B12" stroke-width="4.5"/>
+      <path d="M88 112 Q100 124 112 112 Z" fill="#D9534F"/>
+      <path d="M91 113 L109 113" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+      <path d="M55 78 C65 45 110 42 145 72 C135 50 115 35 95 36 C70 36 56 55 55 78 Z" fill="#5C3826"/>
+    </symbol>
+  </svg>
+
+  <div class="phone-frame">
+    <div class="status-bar">
+      <span id="clock-top">6:41</span>
+      <div class="notch"></div>
+      <span>📶 🔋</span>
+    </div>
+
+    <!-- ==========================================
+         PANTALLA 1: BIENVENIDA (SPLASH)
+         ========================================== -->
+    <section id="screen-1" class="screen active">
+      <div></div>
+      <div class="avatar-container">
+        <svg class="avatar-lg"><use href="#cley-avatar"></use></svg>
+      </div>
+      <div>
+        <h1>¡Bienvenido a<br>Cley's HelpMe!</h1>
+        <p class="subtitle">Tu asistente personal para aprender a usar tu teléfono inteligente</p>
+      </div>
+      <button class="btn-orange" onclick="goToOnboarding()">
+        <span>Empezar &rarr;</span>
+      </button>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 2: REGISTRO Y DIAGNÓSTICO (FRAMES A, B, C)
+         ========================================== -->
+    <section id="screen-2" class="screen">
+      <h2>¡Hola! Soy Cley's HelpMe y estoy para facilitarte el uso de tu dispositivo móvil</h2>
+
+      <div class="avatar-container">
+        <svg class="avatar-lg avatar-onboarding"><use href="#cley-avatar"></use></svg>
+      </div>
+
+      <!-- Frame A: Nombre -->
+      <div id="frame-a">
+        <h2>1. Dime, ¿cómo te llamas?</h2>
+        <input type="text" id="input-nombre" class="input-large" placeholder="Escribe tu nombre aquí..." />
+        <div class="nav-pair">
+          <button class="btn-orange" onclick="showScreen('screen-1')">&larr; Retroceder</button>
+          <button class="btn-orange" onclick="nextOnboarding('B')">Siguiente &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Frame B: Edad -->
+      <div id="frame-b">
+        <h2>2. ¿Qué edad tienes?</h2>
+        <input type="number" id="input-edad" class="input-large" placeholder="Ej. 72" />
+        <div class="nav-pair">
+          <button class="btn-orange" onclick="nextOnboarding('A')">&larr; Retroceder</button>
+          <button class="btn-orange" onclick="nextOnboarding('C')">Siguiente &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Frame C: Diagnóstico -->
+      <div id="frame-c">
+        <h2>3. ¿Se te dificulta usar tu teléfono inteligente?</h2>
+        <div class="eval-row eval-onboarding">
+          <button class="btn-yes" onclick="finishOnboarding(true)">SÍ</button>
+          <button class="btn-no" onclick="finishOnboarding(false)">NO</button>
+        </div>
+        <button class="btn-outline-orange" onclick="nextOnboarding('B')">&larr; Retroceder</button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 3: MENÚ PRINCIPAL (DASHBOARD)
+         ========================================== -->
+    <section id="screen-3" class="screen">
+      <div>
+        <h1>Menú Principal</h1>
+        <p class="subtitle greeting-user" id="greeting-user"></p>
+      </div>
+
+      <div class="avatar-container">
+        <svg class="avatar-lg avatar-dashboard"><use href="#cley-avatar"></use></svg>
+      </div>
+
+      <div>
+        <button class="btn-orange" onclick="openVoiceAssistant()">
+          <span class="menu-icon">🎙️</span>
+          <span>Hablar con Cley</span>
+        </button>
+
+        <button class="btn-orange" onclick="openLessonsCatalog()">
+          <span class="menu-icon">📱</span>
+          <span>Aprender a usar mis Apps</span>
+        </button>
+
+        <button class="btn-orange" onclick="openSettings()">
+          <span class="menu-icon">⚙️</span>
+          <span>Configuración</span>
+        </button>
+
+        <!-- Botones Rápidos de Acompañamiento (de Clara) -->
+        <div class="quick-care-row">
+          <button class="btn-pill" onclick="remindMedication()">💊 Mis Pastillas</button>
+          <button class="btn-sos" onclick="triggerSOS()">🚨 Ayuda SOS</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 4: ASISTENTE VIRTUAL (VOZ Y TEXTO DIRECTO A PYTHON)
+         ========================================== -->
+    <section id="screen-4" class="screen">
+      <div class="speech-row">
+        <div class="avatar-circle">
+          <svg viewBox="0 0 200 200" width="100%" height="100%"><use href="#cley-avatar"></use></svg>
+        </div>
+        <div class="speech-bubble" id="cley-prompt-bubble">
+          ¡Dime! ¿En qué te puedo ayudar?
+        </div>
+      </div>
+
+      <div class="mic-wrapper">
+        <h2 id="mic-status-label">Presiona para hablar</h2>
+        <button class="mic-circle-orange" id="btn-mic-main" onclick="startVoiceCapture()">
+          <span class="mic-icon">🎙️</span>
+        </button>
+      </div>
+
+      <div>
+        <div class="chat-input-row chat-input-row-assistant">
+          <input type="text" id="chat-text-input" class="chat-input" placeholder="Escribe aquí..." onkeypress="if(event.key==='Enter') submitUserQuery()" />
+          <button class="send-btn" onclick="submitUserQuery()">➤</button>
+        </div>
+        <button class="btn-outline-orange" onclick="showScreen('screen-3')">&larr; Volver al Menú</button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 5: RESPUESTA DE LA IA PASO A PASO
+         ========================================== -->
+    <section id="screen-5" class="screen">
+      <div class="speech-row">
+        <div class="avatar-circle">
+          <svg viewBox="0 0 200 200" width="100%" height="100%"><use href="#cley-avatar"></use></svg>
+        </div>
+        <div class="speech-bubble" id="ai-response-text">
+          Para enviar una nota de voz, mantén presionado el botón verde...
+        </div>
+      </div>
+
+      <div class="mic-wrapper">
+        <button class="mic-circle-green" onclick="speakCurrentExplanation()">
+          <span class="mic-icon mic-icon-response">🎙️</span>
+        </button>
+        <h2 class="response-listen-label">Presiona aquí para escuchar</h2>
+      </div>
+
+      <div>
+        <button class="btn-orange" onclick="goToEvaluation('Consulta a Cley')">
+          <span>Entendido</span>
+        </button>
+        <button class="btn-outline-orange" onclick="requestMoreHelp()">
+          <span>Necesito más ayuda</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 6: CATÁLOGO DE LECCIONES DISPONIBLES
+         ========================================== -->
+    <!-- ==========================================
+         PANTALLA 6: CATÁLOGO DE LECCIONES DISPONIBLES
+         ========================================== -->
+    <section id="screen-6" class="screen">
+      <div class="speech-row">
+        <div class="avatar-circle">
+          <svg viewBox="0 0 200 200" width="100%" height="100%"><use href="#cley-avatar"></use></svg>
+        </div>
+        <div class="speech-bubble">
+          ¡Excelente! Selecciona la aplicación que deseas aprender a usar hoy.
+        </div>
+      </div>
+
+      <div class="lessons-grid">
+        <button class="app-card whatsapp" onclick="startSimulation('whatsapp')">
+          <div class="app-icon whatsapp">💬</div>
+          <span>Enviar Audio en WhatsApp</span>
+        </button>
+
+        <button class="app-card telegram" onclick="startSimulation('telegram')">
+          <div class="app-icon telegram">✈️</div>
+          <span>Mensajes y Fotos en Telegram</span>
+        </button>
+
+        <button class="app-card instagram" onclick="startSimulation('instagram')">
+          <div class="app-icon instagram">📷</div>
+          <span>Ver Fotos en Instagram</span>
+        </button>
+
+        <button class="app-card phone" onclick="startSimulation('phone')">
+          <div class="app-icon phone">📞</div>
+          <span>Hacer una Llamada Telefónica</span>
+        </button>
+
+        <button class="app-card camera" onclick="startSimulation('camera')">
+          <div class="app-icon camera">📸</div>
+          <span>Tomar una Buena Foto</span>
+        </button>
+
+        <button class="app-card youtube" onclick="startSimulation('youtube')">
+          <div class="app-icon youtube">▶️</div>
+          <span>Ver Música y Videos en YouTube</span>
+        </button>
+      </div>
+
+      <button class="btn-orange" onclick="showScreen('screen-3')">
+        <span>&larr; Volver al Menú</span>
+      </button>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 7: SIMULADOR INTERACTIVO PASO A PASO
+         ========================================== -->
+    <section id="screen-7" class="screen">
+      <div class="speech-row">
+        <div class="avatar-circle">
+          <svg viewBox="0 0 200 200" width="100%" height="100%"><use href="#cley-avatar"></use></svg>
+        </div>
+        <div class="speech-bubble sim-instruction-bubble" id="sim-instruction-bubble">
+          Primero debes buscar este icono en la parte baja de tu teléfono.
+        </div>
+      </div>
+
+      <!-- Teléfono simulado interactivo -->
+      <div class="sim-container-card">
+        <div class="sim-app-bar" id="sim-app-bar">
+          <div class="sim-app-bar-left">
+            <span id="sim-app-logo">🟢</span>
+            <span id="sim-app-title">WhatsApp Familiar</span>
+          </div>
+          <span class="sim-badge-step" id="sim-step-badge">Paso 1 de 3</span>
+        </div>
+
+        <div id="sim-screen-body" class="sim-screen-body">
+          <div class="sim-chat-bubble" id="sim-chat-incoming">Hija: ¡Hola papá! ¿Cómo amaneciste?</div>
+          <div class="sim-chat-bubble out" id="sim-chat-outgoing" style="display:none;"></div>
+          <div class="sim-feedback-toast" id="sim-feedback-toast">¡Muy bien! Ahora completa el paso.</div>
+        </div>
+
+        <div class="sim-interactive-footer">
+          <div class="sim-target-hint">
+            <span class="red-arrow">➔</span>
+            <span>Toca este botón:</span>
+          </div>
+          <button class="sim-pulse-btn" id="sim-target-btn" onclick="onSimTargetClick()">
+            <span id="sim-target-icon">🎙️</span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn-orange" onclick="nextSimulationStep()">
+          <span>Siguiente Paso &rarr;</span>
+        </button>
+        <button class="btn-outline-orange" onclick="showScreen('screen-6')">
+          <span>Cambiar de aplicación</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 8: EVALUACIÓN DE LA SESIÓN (SÍ / NO)
+         ========================================== -->
+    <section id="screen-8" class="screen">
+      <div></div>
+      <div class="avatar-container">
+        <svg class="avatar-lg"><use href="#cley-avatar"></use></svg>
+      </div>
+
+      <div>
+        <h1>¿La lección fue de ayuda?</h1>
+        <p class="subtitle">Toca un botón para guardar tu progreso de hoy.</p>
+      </div>
+
+      <div class="eval-row">
+        <button class="btn-yes" onclick="submitEvaluation(true)">SÍ 👍</button>
+        <button class="btn-no" onclick="submitEvaluation(false)">NO 👎</button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA CONFIGURACIÓN
+         ========================================== -->
+    <section id="screen-config" class="screen">
+      <h1>Configuración</h1>
+
+      <div class="config-options">
+        <div class="config-card">
+          <span>Tamaño de Letra</span>
+          <div class="font-size-row">
+            <button class="font-size-btn active" id="font-btn-norm" onclick="setFontSize('normal')">Normal</button>
+            <button class="font-size-btn" id="font-btn-lg" onclick="setFontSize('large')">Grande A+</button>
+          </div>
+        </div>
+
+        <div class="config-card" onclick="toggleNotifications()">
+          <span>Notificaciones y Voz</span>
+          <span class="badge-green" id="notif-badge">Activadas</span>
+        </div>
+
+        <div class="config-card config-datetime-card">
+          <span>Fecha y Hora del Sistema</span>
+          <span id="system-datetime" class="system-datetime">Cargando...</span>
+        </div>
+
+        <div class="config-card" onclick="openAdminDashboard()" style="cursor: pointer; border-color: var(--navy);">
+          <span>📊 Panel Casa de los Abuelos (Admin)</span>
+          <span class="badge-blue">Ver Reporte &rarr;</span>
+        </div>
+      </div>
+
+      <div class="config-footer">
+        <button class="btn-orange" onclick="showScreen('screen-3')">
+          <span>Retroceder</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 9: MIS PASTILLAS (MÓDULO DE SALUD)
+         ========================================== -->
+    <section id="screen-pastillas" class="screen">
+      <div>
+        <h1>💊 Mis Pastillas</h1>
+        <p class="subtitle">Horarios y recordatorios de tus medicamentos de hoy.</p>
+      </div>
+
+      <div id="pastillas-list-container">
+        <!-- Renderizado dinámico desde SQLite -->
+      </div>
+
+      <div>
+        <button class="btn-orange" onclick="speakMedicationSummary()">
+          <span>🔊 Escuchar Recordatorios</span>
+        </button>
+        <button class="btn-outline-orange" onclick="showScreen('screen-3')">
+          <span>&larr; Volver al Menú</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 10: ALERTA Y ASISTENCIA SOS
+         ========================================== -->
+    <section id="screen-sos" class="screen">
+      <div class="sos-banner-alert">
+        <h1 style="color: #991B1B; margin: 0;">🚨 ASISTENCIA DE AYUDA</h1>
+        <p style="color: #991B1B; font-size: 18px; margin: 4px 0 0; font-weight: 700;">
+          Mantén la calma. Estamos para ayudarte.
+        </p>
+      </div>
+
+      <div class="avatar-container">
+        <svg class="avatar-lg"><use href="#cley-avatar"></use></svg>
+      </div>
+
+      <div class="sos-contact-card">
+        <p style="font-size: 16px; color: #64748B; font-weight: 700; margin: 0;">Contacto de Emergencia</p>
+        <h2 id="sos-contact-name" style="margin: 6px 0; color: var(--navy);">Hija María</h2>
+        <p id="sos-contact-relation" style="font-size: 17px; color: var(--orange); font-weight: 700; margin: 0 0 10px;">Hija Mayor</p>
+        
+        <a id="sos-call-link" href="tel:+584141234567" class="sos-call-btn" onclick="cleySpeak('Llamando a tu contacto de emergencia. Tranquilo.')">
+          <span>📞 Llamar Ahora</span>
+        </a>
+      </div>
+
+      <div>
+        <button class="btn-orange" onclick="speakSosInstructions()">
+          <span>🔊 Instrucciones de Cley</span>
+        </button>
+        <button class="btn-outline-orange" onclick="showScreen('screen-3')">
+          <span>&larr; Estoy bien, Volver al Menú</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         PANTALLA 11: PANEL ADMINISTRATIVO GERONTOLÓGICO
+         ========================================== -->
+    <section id="screen-admin" class="screen">
+      <div>
+        <h1>📊 Panel Gerontológico</h1>
+        <p class="subtitle">Casa De Los Abuelos de Miranda</p>
+      </div>
+
+      <div class="admin-metric-grid">
+        <div class="metric-card highlight">
+          <div class="metric-num" id="admin-stat-satisfaction">100%</div>
+          <div class="metric-title">Satisfacción</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num" id="admin-stat-users">0</div>
+          <div class="metric-title">Abuelos Registrados</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num" id="admin-stat-age">0</div>
+          <div class="metric-title">Edad Promedio</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num" id="admin-stat-evals">0</div>
+          <div class="metric-title">Lecciones Hechas</div>
+        </div>
+      </div>
+
+      <div class="admin-list-card">
+        <div class="admin-list-title">👥 Últimos Abuelitos Registrados</div>
+        <div id="admin-users-list">
+          <div class="admin-item-row">Cargando datos...</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <button class="btn-orange" onclick="loadAdminDashboardData()">
+          <span>🔄 Actualizar Métricas</span>
+        </button>
+        <button class="btn-outline-orange" onclick="showScreen('screen-config')">
+          <span>&larr; Volver a Configuración</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ====================================================
+    // CONEXIÓN DIRECTA CON PYTHON (SIN n8n)
+    // ====================================================
+    const API_URL = "http://localhost:8000";
+
+    let userProfile = {
+      nombre: "Amigo",
+      edad: 70,
+      dificultad_tecnologica: true
+    };
+
+    let currentLessonApp = "whatsapp";
+    let currentSimStep = 0;
+
+    // Lecciones preconfiguradas del Módulo 4
+    const simulationTutorials = {
+      whatsapp: {
+        title: "WhatsApp Familiar",
+        logo: "🟢",
+        color: "#075E54",
+        bg: "#EFEAE2",
+        targetColor: "#25D366",
+        steps: [
+          {
+            instruction: "Paso 1: Para enviar un audio a tu familiar, ubica abajo a la derecha el botón redondo verde con el micrófono que titila.",
+            incoming: "Hija: ¡Hola! ¿Cómo estás hoy? Cuéntame cómo te sientes.",
+            outgoing: null,
+            targetIcon: "🎙️",
+            feedback: "¡Muy bien! Ahora aprenderemos cómo grabar el mensaje."
+          },
+          {
+            instruction: "Paso 2: Toca el botón verde para simular que dejas tu dedo presionado mientras hablas con calma.",
+            incoming: "Hija: ¡Hola! ¿Cómo estás hoy? Cuéntame cómo te sientes.",
+            outgoing: "🔴 Grabando nota de voz... 0:05 seg",
+            targetIcon: "🗣️",
+            feedback: "¡Excelente! Ya estás grabando tu voz con claridad."
+          },
+          {
+            instruction: "Paso 3: Toca de nuevo el botón para soltarlo. ¡Verás cómo tu nota de voz se envía solita!",
+            incoming: "Hija: ¡Hola! ¿Cómo estás hoy? Cuéntame cómo te sientes.",
+            outgoing: "▶️ ılıllı 0:12 seg (Enviado ✔️✔️)",
+            targetIcon: "✔️",
+            feedback: "¡Completado con éxito! Tu familiar ya recibió tu audio."
+          }
+        ]
+      },
+      telegram: {
+        title: "Telegram - Casa de los Abuelos",
+        logo: "✈️",
+        color: "#2AABEE",
+        bg: "#E3EEF8",
+        targetColor: "#2AABEE",
+        steps: [
+          {
+            instruction: "Paso 1: Toca el botón de escribir mensaje que señala la flecha para saludar a tus compañeros.",
+            incoming: "Casa de los Abuelos: ¡Bienvenidos al taller de hoy!",
+            outgoing: null,
+            targetIcon: "⌨️",
+            feedback: "¡Perfecto! Ya se abrió el teclado para escribir."
+          },
+          {
+            instruction: "Paso 2: Toca el botón del clip para adjuntar una foto o recuerdo de tu teléfono.",
+            incoming: "Casa de los Abuelos: ¡Bienvenidos al taller de hoy!",
+            outgoing: "Escribiendo: 'Un abrazo a todos los abuelitos'...",
+            targetIcon: "📎",
+            feedback: "¡Bien hecho! Ahora puedes elegir una foto."
+          },
+          {
+            instruction: "Paso 3: Toca el avioncito de papel azul para enviar tu saludo al grupo.",
+            incoming: "Casa de los Abuelos: ¡Bienvenidos al taller de hoy!",
+            outgoing: "📸 Foto familiar compartida y saludo enviado 🎉",
+            targetIcon: "✈️",
+            feedback: "¡Felicidades! Todo el grupo ya puede ver tu mensaje."
+          }
+        ]
+      },
+      instagram: {
+        title: "Instagram Fotos",
+        logo: "📷",
+        color: "#C13584",
+        bg: "#FDF2F8",
+        targetColor: "#E1306C",
+        steps: [
+          {
+            instruction: "Paso 1: Para decirle a tus hijos o nietos que te gustó su foto, toca el corazón rojo que titila.",
+            incoming: "📸 Nietos: '¡Día de paseo en el parque con los primos!'",
+            outgoing: null,
+            targetIcon: "❤️",
+            feedback: "¡Hermoso detalle! Les llegó tu me gusta."
+          },
+          {
+            instruction: "Paso 2: Si quieres escribirles un lindo mensaje debajo de su foto, toca el globito de texto.",
+            incoming: "📸 Nietos: '¡Día de paseo en el parque con los primos!'",
+            outgoing: "❤️ Te ha gustado esta foto",
+            targetIcon: "💬",
+            feedback: "¡Listo! Ya puedes escribir tu dedicatoria."
+          },
+          {
+            instruction: "Paso 3: Toca el botón de la estrellita para publicar tu comentario con mucho cariño.",
+            incoming: "📸 Nietos: '¡Día de paseo en el parque con los primos!'",
+            outgoing: "💬 Comentario: '¡Qué grandes y hermosos están, bendiciones!' ✨",
+            targetIcon: "✨",
+            feedback: "¡Qué emoción! Tu familia acaba de leer tu comentario."
+          }
+        ]
+      },
+      phone: {
+        title: "Llamadas Telefónicas",
+        logo: "📞",
+        color: "#059669",
+        bg: "#ECFDF5",
+        targetColor: "#10B981",
+        steps: [
+          {
+            instruction: "Paso 1: Para llamar a alguien, primero toca el botón verde con el teléfono que señala la flecha.",
+            incoming: "Contacto guardado: 'Hijo Mayor' (0414-1234567)",
+            outgoing: null,
+            targetIcon: "📞",
+            feedback: "¡Muy bien! El teléfono está marcando el número."
+          },
+          {
+            instruction: "Paso 2: Cuando te contesten, si te cuesta escuchar, toca el botón de la bocina para activar el altavoz fuerte.",
+            incoming: "Llamada en curso (0:15) 🔊 Hablando con tu hijo...",
+            outgoing: "Voz del hijo: '¡Hola mamá, qué alegría escucharte!'",
+            targetIcon: "🔊",
+            feedback: "¡Excelente! Ahora escucharás con volumen alto."
+          },
+          {
+            instruction: "Paso 3: Al despedirte, presiona el botón rojo para colgar la llamada con seguridad.",
+            incoming: "Llamada finalizada con éxito (Duración 2:40)",
+            outgoing: "✅ Llamada terminada sin consumir saldo extra.",
+            targetIcon: "🔴",
+            feedback: "¡Muy bien hecho! Ya sabes llamar y colgar tranquilo."
+          }
+        ]
+      },
+      camera: {
+        title: "Cámara de Fotos",
+        logo: "📸",
+        color: "#4F46E5",
+        bg: "#EEF2FF",
+        targetColor: "#6366F1",
+        steps: [
+          {
+            instruction: "Paso 1: Sostén el teléfono firme con ambas manos y toca el botón blanco grande del centro para tomar la foto.",
+            incoming: "Encuadrando paisaje y flores del jardín...",
+            outgoing: null,
+            targetIcon: "🔘",
+            feedback: "¡Click! La foto fue tomada sin moverse."
+          },
+          {
+            instruction: "Paso 2: Para revisar cómo quedó tu foto, toca el cuadrito pequeño de la esquina que titila.",
+            incoming: "📸 Foto guardada en tu galería de imágenes",
+            outgoing: "Revisando foto: Se ve nítida y con buena luz.",
+            targetIcon: "🖼️",
+            feedback: "¡Se ve bellísima tu foto!"
+          },
+          {
+            instruction: "Paso 3: Toca el botón de compartir para enviársela de inmediato a tu familia.",
+            incoming: "Opciones de compartir foto disponibles",
+            outgoing: "✅ Foto enviada a tus seres queridos.",
+            targetIcon: "📤",
+            feedback: "¡Completado! Ya sabes fotografiar y compartir tus recuerdos."
+          }
+        ]
+      },
+      youtube: {
+        title: "Música y Videos en YouTube",
+        logo: "▶️",
+        color: "#DC2626",
+        bg: "#FEF2F2",
+        targetColor: "#EF4444",
+        steps: [
+          {
+            instruction: "Paso 1: Toca la lupita que titila para buscar tus canciones o cantantes favoritos de tu época.",
+            incoming: "Buscando: 'Música de boleros del recuerdo'...",
+            outgoing: null,
+            targetIcon: "🔍",
+            feedback: "¡Encontrado! Hay muchas canciones disponibles."
+          },
+          {
+            instruction: "Paso 2: Toca el triángulo rojo para poner a sonar tu canción favorita.",
+            incoming: "🎶 Reproduciendo: 'Los mejores boleros y canciones de oro'",
+            outgoing: "▶️ Sonando música suave y agradable...",
+            targetIcon: "▶️",
+            feedback: "¡Qué hermosa melodía! Ya está sonando."
+          },
+          {
+            instruction: "Paso 3: Si quieres ver el video grande en toda la pantalla, toca el botón de ampliar en la esquina.",
+            incoming: "📺 Video en pantalla completa con subtítulos claros",
+            outgoing: "✅ Disfrutando del video a pantalla grande.",
+            targetIcon: "⛶",
+            feedback: "¡Felicidades! Ya sabes buscar y disfrutar tus canciones favoritas."
+          }
+        ]
+      }
+    };
+
+    // ====================================================
+    // VOZ INTERACTIVA DE CLEY (TTS PAUSADO Y CÁLIDO)
+    // ====================================================
+    let availableVoices = [];
+
+    function initVoices() {
+      if ('speechSynthesis' in window) {
+        availableVoices = window.speechSynthesis.getVoices();
+        window.speechSynthesis.onvoiceschanged = () => {
+          availableVoices = window.speechSynthesis.getVoices();
+        };
+      }
+    }
+    initVoices();
+
+    function cleySpeak(texto) {
+      if (!('speechSynthesis' in window)) return;
+      
+      const badge = document.getElementById('notif-badge');
+      if (badge && badge.innerText === "Desactivadas") return;
+
+      window.speechSynthesis.cancel();
+      const voz = new SpeechSynthesisUtterance(texto);
+      voz.lang = 'es-ES';
+      voz.rate = 0.88; // Velocidad pausada ideal para adultos mayores
+      voz.pitch = 1.05;
+
+      // Buscar voz en español femenina o cálida si existe
+      if (availableVoices.length > 0) {
+        const spanishVoice = availableVoices.find(v => (v.lang.startsWith('es') && (v.name.includes('Helena') || v.name.includes('Sabina') || v.name.includes('Monica') || v.name.includes('Laura') || v.name.includes('Natural')))) 
+                            || availableVoices.find(v => v.lang.startsWith('es'));
+        if (spanishVoice) {
+          voz.voice = spanishVoice;
+        }
+      }
+
+      window.speechSynthesis.speak(voz);
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // ====================================================
+    // MÓDULO 1: ONBOARDING Y DIAGNÓSTICO
+    // ====================================================
+    function goToOnboarding() {
+      showScreen('screen-2');
+      nextOnboarding('A');
+    }
+
+    function nextOnboarding(frame) {
+      document.getElementById('frame-a').style.display = (frame === 'A') ? 'block' : 'none';
+      document.getElementById('frame-b').style.display = (frame === 'B') ? 'block' : 'none';
+      document.getElementById('frame-c').style.display = (frame === 'C') ? 'block' : 'none';
+
+      if (frame === 'A') {
+        cleySpeak("¡Hola! Soy Cley's HelpMe y estoy para facilitarte el uso de tu dispositivo móvil. Primero dime, ¿cómo te llamas?");
+      } else if (frame === 'B') {
+        const nombreInput = document.getElementById('input-nombre').value.trim();
+        if (nombreInput) userProfile.nombre = nombreInput;
+        cleySpeak(`Mucho gusto, ${userProfile.nombre}. Ahora dime, ¿qué edad tienes?`);
+      } else if (frame === 'C') {
+        const edadInput = parseInt(document.getElementById('input-edad').value);
+        if (!isNaN(edadInput)) userProfile.edad = edadInput;
+        cleySpeak("¿Se te dificulta usar tu teléfono inteligente? Toca el botón verde para Sí, o el rojo para No.");
+      }
+    }
+
+    async function finishOnboarding(dificultad) {
+      userProfile.dificultad_tecnologica = dificultad;
+      document.getElementById('greeting-user').innerText = `¡Hola, ${userProfile.nombre}!`;
+      cleySpeak(`¡Todo listo, ${userProfile.nombre}! Te ayudaré en lo que necesites.`);
+      showScreen('screen-3');
+
+      try {
+        await fetch(`${API_URL}/api/perfil`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userProfile)
+        });
+      } catch (e) {
+        console.log("Funcionando en modo local sin servidor Python.");
+      }
+    }
+
+    // ====================================================
+    // MÓDULO 2: SALUD (PASTILLAS) Y ASISTENCIA SOS
+    // ====================================================
+    let userPastillas = [];
+    let userSosContact = null;
+
+    async function remindMedication() {
+      showScreen('screen-pastillas');
+      cleySpeak(`Aquí tienes tus recordatorios de pastillas para hoy, ${userProfile.nombre}.`);
+      await loadPastillas();
+    }
+
+    async function loadPastillas() {
+      const container = document.getElementById('pastillas-list-container');
+      container.innerHTML = '<div style="text-align:center; padding:15px; color:#64748B;">Cargando tus medicamentos...</div>';
+
+      try {
+        const res = await fetch(`${API_URL}/api/pastillas?usuario=${encodeURIComponent(userProfile.nombre)}`);
+        const data = await res.json();
+        userPastillas = data.pastillas || [];
+      } catch (e) {
+        userPastillas = [
+          { id: 1, medicamento: "Pastilla de la Tensión", hora: "08:00 AM", instruccion: "Tomar con abundante agua después de desayunar", activo: true },
+          { id: 2, medicamento: "Complejo Vitamínico", hora: "01:00 PM", instruccion: "Tomar junto con el almuerzo", activo: true },
+          { id: 3, medicamento: "Calcio para los huesos", hora: "08:00 PM", instruccion: "Tomar antes de dormir", activo: true }
+        ];
+      }
+
+      renderPastillas();
+    }
+
+    function renderPastillas() {
+      const container = document.getElementById('pastillas-list-container');
+      if (userPastillas.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:15px; color:#64748B;">No tienes medicamentos programados hoy.</div>';
+        return;
+      }
+
+      container.innerHTML = userPastillas.map(p => `
+        <div class="health-card" id="med-card-${p.id}">
+          <div style="flex:1;">
+            <div class="health-time-badge">⏰ ${p.hora}</div>
+            <div class="health-med-name">${p.medicamento}</div>
+            <div class="health-med-desc">${p.instruccion || ''}</div>
+          </div>
+          <button class="btn-check-med" title="Marcar como tomada" onclick="markPillTaken(${p.id}, '${p.medicamento}')">
+            ✓
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function markPillTaken(id, nombreMed) {
+      const card = document.getElementById(`med-card-${id}`);
+      if (card) {
+        card.style.opacity = '0.4';
+        card.style.borderColor = '#10B981';
+      }
+      cleySpeak(`¡Muy bien, ${userProfile.nombre}! Has registrado que tomaste tu ${nombreMed}. Sigue cuidándote.`);
+    }
+
+    function speakMedicationSummary() {
+      if (userPastillas.length === 0) {
+        cleySpeak("No tienes pastillas pendientes registradas.");
+        return;
+      }
+      const resumen = userPastillas.map(p => `A las ${p.hora}, te toca ${p.medicamento}.`).join(' ');
+      cleySpeak(`Atención ${userProfile.nombre}: ${resumen}`);
+    }
+
+    async function triggerSOS() {
+      showScreen('screen-sos');
+      cleySpeak(`Tranquilo ${userProfile.nombre}, he abierto tu pantalla de ayuda de emergencia. Respira con calma.`);
+
+      try {
+        const res = await fetch(`${API_URL}/api/sos?usuario=${encodeURIComponent(userProfile.nombre)}`);
+        const data = await res.json();
+        userSosContact = data.contacto;
+      } catch (e) {
+        userSosContact = {
+          nombre: "Hija María (Contacto de Emergencia)",
+          telefono: "+58 414 123 4567",
+          parentesco: "Hija Mayor"
+        };
+      }
+
+      if (userSosContact) {
+        document.getElementById('sos-contact-name').innerText = userSosContact.nombre;
+        document.getElementById('sos-contact-relation').innerText = userSosContact.parentesco || 'Familiar de confianza';
+        document.getElementById('sos-call-link').href = `tel:${userSosContact.telefono.replace(/\s+/g, '')}`;
+      }
+    }
+
+    function speakSosInstructions() {
+      cleySpeak(`Tranquilo, si necesitas auxilio, presiona el botón rojo grande que dice Llamar Ahora para comunicarte de inmediato con ${userSosContact ? userSosContact.nombre : 'tu familiar'}. No estás solo.`);
+    }
+
+    // ====================================================
+    // MÓDULO 3: HABLAR CON CLEY (CONEXIÓN DIRECTA A PYTHON)
+    // ====================================================
+    function openVoiceAssistant() {
+      showScreen('screen-4');
+      cleySpeak(`¡Dime, ${userProfile.nombre}! ¿En qué te puedo ayudar? Presiona el círculo naranja para hablarme.`);
+    }
+
+    function startVoiceCapture() {
+      const micBtn = document.getElementById('btn-mic-main');
+      const statusLabel = document.getElementById('mic-status-label');
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        document.getElementById('chat-text-input').value = "¿Cómo envío una nota de voz en WhatsApp?";
+        submitUserQuery();
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'es-ES';
+      micBtn.classList.add('listening');
+      statusLabel.innerText = "Escuchando... habla ahora";
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('chat-text-input').value = transcript;
+        micBtn.classList.remove('listening');
+        statusLabel.innerText = "Presiona para hablar";
+        submitUserQuery();
+      };
+
+      recognition.onerror = () => {
+        micBtn.classList.remove('listening');
+        statusLabel.innerText = "Presiona para hablar";
+        cleySpeak("Disculpa, no te escuché bien. Toca de nuevo el micrófono o escribe tu pregunta abajo.");
+      };
+
+      recognition.start();
+    }
+
+    async function submitUserQuery() {
+      const input = document.getElementById('chat-text-input');
+      const pregunta = input.value.trim() || "¿Cómo envío una nota de voz?";
+      input.value = "";
+
+      document.getElementById('ai-response-text').innerText = "Preparando tu explicación paso a paso...";
+      showScreen('screen-5');
+
+      try {
+        const response = await fetch(`${API_URL}/api/preguntar`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre: userProfile.nombre,
+            edad: userProfile.edad,
+            dificultad: userProfile.dificultad_tecnologica,
+            pregunta: pregunta
+          })
+        });
+        const data = await response.json();
+        document.getElementById('ai-response-text').innerText = data.respuesta;
+        cleySpeak(data.respuesta);
+      } catch (error) {
+        // Respuesta inteligente local si aún no has encendido Python
+        const localReply = `¡Con gusto, ${userProfile.nombre}! Para enviar una nota de voz, mantén presionado el botón verde con el micrófono en tu pantalla, habla con calma y suéltalo para enviar.`;
+        document.getElementById('ai-response-text').innerText = localReply;
+        cleySpeak(localReply);
+      }
+    }
+
+    function speakCurrentExplanation() {
+      cleySpeak(document.getElementById('ai-response-text').innerText);
+    }
+
+    function requestMoreHelp() {
+      cleySpeak("No te preocupes, vamos a practicarlo juntos paso a paso con dibujos.");
+      startSimulation('whatsapp');
+    }
+
+    // ====================================================
+    // MÓDULO 4: SIMULADOR INTERACTIVO DE APPS
+    // ====================================================
+    function openLessonsCatalog() {
+      showScreen('screen-6');
+      cleySpeak("¡Excelente! Selecciona la aplicación que deseas aprender a usar hoy.");
+    }
+
+    function startSimulation(appKey) {
+      currentLessonApp = appKey;
+      currentSimStep = 0;
+      showScreen('screen-7');
+      renderSimulationStep();
+    }
+
+    function renderSimulationStep() {
+      const tutorial = simulationTutorials[currentLessonApp];
+      const stepData = tutorial.steps[currentSimStep];
+
+      // Actualizar App Bar
+      document.getElementById('sim-app-bar').style.background = tutorial.color;
+      document.getElementById('sim-app-logo').innerText = tutorial.logo || "📱";
+      document.getElementById('sim-app-title').innerText = tutorial.title;
+      document.getElementById('sim-step-badge').innerText = `Paso ${currentSimStep + 1} de ${tutorial.steps.length}`;
+
+      // Actualizar instrucción de Cley
+      document.getElementById('sim-instruction-bubble').innerText = stepData.instruction;
+
+      // Actualizar cuerpo del teléfono simulado
+      const bodyEl = document.getElementById('sim-screen-body');
+      bodyEl.style.background = tutorial.bg || "#EFEAE2";
+
+      const inBubble = document.getElementById('sim-chat-incoming');
+      inBubble.innerText = stepData.incoming;
+
+      const outBubble = document.getElementById('sim-chat-outgoing');
+      if (stepData.outgoing) {
+        outBubble.innerText = stepData.outgoing;
+        outBubble.style.display = "block";
+      } else {
+        outBubble.style.display = "none";
+      }
+
+      // Ocultar feedback toast
+      const toast = document.getElementById('sim-feedback-toast');
+      toast.style.display = "none";
+
+      // Actualizar botón objetivo
+      const targetBtn = document.getElementById('sim-target-btn');
+      targetBtn.style.background = tutorial.targetColor || "var(--green)";
+      document.getElementById('sim-target-icon').innerText = stepData.targetIcon;
+
+      // Narración por voz pausada
+      cleySpeak(stepData.instruction);
+    }
+
+    function onSimTargetClick() {
+      const tutorial = simulationTutorials[currentLessonApp];
+      const stepData = tutorial.steps[currentSimStep];
+
+      // Mostrar toast de éxito y reproducir feedback
+      const toast = document.getElementById('sim-feedback-toast');
+      toast.innerText = stepData.feedback;
+      toast.style.display = "block";
+
+      // Si hay acción saliente, mostrarla con animación
+      if (stepData.outgoing) {
+        const outBubble = document.getElementById('sim-chat-outgoing');
+        outBubble.innerText = stepData.outgoing;
+        outBubble.style.display = "block";
+      }
+
+      cleySpeak(stepData.feedback);
+
+      // Auto avanzar tras breve pausa o permitir tocar botón siguiente
+      setTimeout(() => {
+        if (currentSimStep < tutorial.steps.length - 1) {
+          currentSimStep++;
+          renderSimulationStep();
+        } else {
+          goToEvaluation(`Lección ${tutorial.title}`);
+        }
+      }, 1800);
+    }
+
+    function nextSimulationStep() {
+      const tutorial = simulationTutorials[currentLessonApp];
+      if (currentSimStep < tutorial.steps.length - 1) {
+        currentSimStep++;
+        renderSimulationStep();
+      } else {
+        goToEvaluation(`Lección ${tutorial.title}`);
+      }
+    }
+
+    // ====================================================
+    // MÓDULO 5: EVALUACIÓN Y CONFIGURACIÓN
+    // ====================================================
+    function goToEvaluation(origen) {
+      showScreen('screen-8');
+      cleySpeak("¿La lección fue de ayuda? Toca Sí en verde o No en rojo.");
+    }
+
+    async function submitEvaluation(fueUtil) {
+      try {
+        await fetch(`${API_URL}/api/evaluacion`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usuario: userProfile.nombre,
+            leccion: currentLessonApp,
+            fue_de_ayuda: fueUtil
+          })
+        });
+      } catch (e) {}
+
+      if (fueUtil) {
+        cleySpeak(`¡Excelente trabajo, ${userProfile.nombre}! Me alegra mucho haberte ayudado hoy.`);
+      } else {
+        cleySpeak(`Gracias por avisarme, ${userProfile.nombre}. La próxima vez te lo explicaré aún más sencillo.`);
+      }
+      showScreen('screen-3');
+    }
+
+    function openSettings() {
+      updateDateTime();
+      showScreen('screen-config');
+      cleySpeak("Estás en Configuración.");
+    }
+
+    function setFontSize(size) {
+      const btnNorm = document.getElementById('font-btn-norm');
+      const btnLg = document.getElementById('font-btn-lg');
+      if (size === 'large') {
+        document.body.classList.add('font-large');
+        btnLg.classList.add('active');
+        btnNorm.classList.remove('active');
+        cleySpeak("Tamaño de letra grande activado.");
+      } else {
+        document.body.classList.remove('font-large');
+        btnNorm.classList.add('active');
+        btnLg.classList.remove('active');
+        cleySpeak("Tamaño de letra normal.");
+      }
+    }
+
+    async function openAdminDashboard() {
+      showScreen('screen-admin');
+      cleySpeak("Bienvenido al panel gerontológico de la Casa de los Abuelos.");
+      await loadAdminDashboardData();
+    }
+
+    async function loadAdminDashboardData() {
+      try {
+        const res = await fetch(`${API_URL}/api/admin/estadisticas`);
+        const data = await res.json();
+        const m = data.metricas;
+
+        document.getElementById('admin-stat-satisfaction').innerText = `${m.satisfaccion_pct}%`;
+        document.getElementById('admin-stat-users').innerText = m.total_usuarios;
+        document.getElementById('admin-stat-age').innerText = `${m.edad_promedio} años`;
+        document.getElementById('admin-stat-evals').innerText = m.total_evaluaciones;
+
+        const listEl = document.getElementById('admin-users-list');
+        if (m.ultimos_usuarios && m.ultimos_usuarios.length > 0) {
+          listEl.innerHTML = m.ultimos_usuarios.map(u => `
+            <div class="admin-item-row">
+              <div>
+                <strong>${u.nombre}</strong> (${u.edad} años)
+                <div style="font-size:12px; color:#64748B;">${u.fecha}</div>
+              </div>
+              <span class="badge-${u.dificultad ? 'orange' : 'green'}" style="padding:4px 8px; border-radius:12px; font-size:12px;">
+                ${u.dificultad ? 'Dificultad Alta' : 'Uso Fácil'}
+              </span>
+            </div>
+          `).join('');
+        } else {
+          listEl.innerHTML = '<div style="padding:8px; color:#64748B;">No hay abuelitos registrados aún.</div>';
+        }
+      } catch (e) {
+        console.error("Error al cargar estadísticas admin", e);
+      }
+    }
+
+    function toggleNotifications() {
+      const badge = document.getElementById('notif-badge');
+      if (badge.innerText === "Activadas") {
+        badge.innerText = "Desactivadas";
+        badge.style.background = "#FEE2E2";
+        badge.style.color = "#991B1B";
+        cleySpeak("Notificaciones desactivadas.");
+      } else {
+        badge.innerText = "Activadas";
+        badge.style.background = "#DCFCE7";
+        badge.style.color = "#15803D";
+        cleySpeak("Notificaciones activadas.");
+      }
+    }
+
+    function updateDateTime() {
+      const now = new Date();
+      const fecha = now.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const hora = now.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('system-datetime').innerText = `${fecha} - ${hora}`;
+      document.getElementById('clock-top').innerText = hora.replace(/\s?[ap]\.?\s?m\.?/i, '');
+    }
+
+    setInterval(updateDateTime, 30000);
+    updateDateTime();
+  </script>
+</body>
+</html>

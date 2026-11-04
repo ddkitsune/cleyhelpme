@@ -1,0 +1,954 @@
+:root {
+  --navy: #0F2942;
+  --orange: #FF6B18;
+  --orange-dark: #D95308;
+  --bg-light: #F4F6F9;
+  --stripe: #EAECEF;
+  --white: #FFFFFF;
+  --green: #25D366;
+  --green-dark: #15803D;
+  --blue-tg: #2AABEE;
+  --red-sos: #D9381E;
+  --red-dark: #9E2411;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: #1A202C;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 12px;
+}
+
+/* Marco de Teléfono Móvil */
+.phone-frame {
+  width: 100%;
+  max-width: 420px;
+  height: 90vh;
+  max-height: 860px;
+  min-height: 600px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--bg-light),
+    var(--bg-light) 14px,
+    var(--stripe) 14px,
+    var(--stripe) 22px
+  );
+  border-radius: 46px;
+  border: 12px solid #11161C;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.65);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barra Superior del Teléfono */
+.status-bar {
+  height: 44px;
+  padding: 0 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--navy);
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.notch {
+  width: 110px;
+  height: 22px;
+  background: #11161C;
+  border-radius: 0 0 14px 14px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Contenedor de Pantallas */
+.screen {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 16px 18px 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.screen::-webkit-scrollbar {
+  width: 6px;
+}
+
+.screen::-webkit-scrollbar-thumb {
+  background: rgba(15, 41, 66, 0.2);
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tipografía de Alta Accesibilidad */
+h1 {
+  color: var(--navy);
+  font-size: 31px;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+h2 {
+  color: var(--navy);
+  font-size: 24px;
+  line-height: 1.25;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+p.subtitle {
+  color: var(--navy);
+  font-size: 20px;
+  line-height: 1.35;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+/* Avatar de Cley */
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.avatar-lg {
+  width: 175px;
+  height: 175px;
+  filter: drop-shadow(0 8px 16px rgba(15,41,66,0.15));
+}
+
+.avatar-circle {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  border: 4px solid var(--blue-tg);
+  background: #E6F3FF;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Burbujas de diálogo de Cley */
+.speech-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.speech-bubble {
+  background: var(--white);
+  border: 2.5px solid var(--navy);
+  border-radius: 22px;
+  padding: 15px 17px;
+  color: var(--navy);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+  box-shadow: 0 6px 15px rgba(15,41,66,0.08);
+  flex: 1;
+}
+
+/* Botones Gigantes de Alto Contraste */
+.btn-orange {
+  background: linear-gradient(180deg, #FF7B2E 0%, var(--orange) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 40px;
+  padding: 17px 22px;
+  font-size: 23px;
+  font-weight: 700;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--orange-dark), 0 10px 18px rgba(255,107,24,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: transform 0.1s;
+  margin-bottom: 12px;
+}
+
+.btn-orange:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--orange-dark);
+}
+
+.btn-outline-orange {
+  background: var(--white);
+  color: var(--orange);
+  border: 3px solid var(--orange);
+  border-radius: 40px;
+  padding: 14px 20px;
+  font-size: 21px;
+  font-weight: 700;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* Acciones rápidas estilo Clara (Pastillas y SOS) */
+.quick-care-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-pill {
+  flex: 1;
+  background: var(--white);
+  color: var(--navy);
+  border: 3px solid var(--navy);
+  border-radius: 24px;
+  padding: 12px 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-sos {
+  flex: 1;
+  background: var(--red-sos);
+  color: var(--white);
+  border: none;
+  border-radius: 24px;
+  padding: 12px 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--red-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Campos de Texto de Diagnóstico */
+.input-large {
+  width: 100%;
+  padding: 16px 18px;
+  font-size: 22px;
+  border-radius: 26px;
+  border: 2.5px solid #99A8B8;
+  background: var(--white);
+  color: var(--navy);
+  text-align: center;
+  font-weight: 700;
+  margin: 10px 0 18px;
+  outline: none;
+}
+
+.input-large:focus {
+  border-color: var(--orange);
+}
+
+.nav-pair {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.nav-pair .btn-orange {
+  font-size: 20px;
+  padding: 15px 10px;
+  margin-bottom: 0;
+}
+
+/* Tarjetas de Lecciones (WhatsApp, Telegram, Instagram) */
+.app-card {
+  background: var(--white);
+  border-radius: 22px;
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: left;
+}
+
+.app-card.whatsapp { border: 4px solid var(--green); }
+.app-card.telegram { border: 4px solid var(--blue-tg); }
+.app-card.instagram { border: 4px solid #E1306C; }
+
+.app-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+/* Botones de Micrófono */
+.mic-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.mic-circle-orange {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 9px solid var(--orange);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(255,107,24,0.3);
+  transition: transform 0.15s;
+}
+
+.mic-circle-orange.listening {
+  animation: pulseMic 1.2s infinite;
+  background: #FFF3EB;
+}
+
+.mic-circle-green {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 5px solid var(--white);
+  outline: 4px solid var(--green);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37,211,102,0.4);
+  margin: 6px auto;
+}
+
+@keyframes pulseMic {
+  0% { box-shadow: 0 0 0 0 rgba(255,107,24,0.6); }
+  70% { box-shadow: 0 0 0 24px rgba(255,107,24,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,107,24,0); }
+}
+
+/* Barra inferior de texto */
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 20px;
+  border-radius: 30px;
+  border: 2.5px solid var(--navy);
+  background: var(--white);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.send-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Simulador Paso a Paso (Pantalla 7) */
+.sim-box {
+  background: #ECE5DD;
+  border: 3px solid var(--navy);
+  border-radius: 22px;
+  padding: 14px;
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.sim-header {
+  background: #075E54;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-target-area {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.red-arrow {
+  font-size: 44px;
+  color: var(--red-sos);
+  font-weight: 900;
+  animation: bounceRight 1s infinite;
+}
+
+@keyframes bounceRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+/* Tarjetas de Configuración */
+.config-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.badge-blue {
+  background: #E1F0FF;
+  color: #0066CC;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 18px;
+}
+
+.badge-green {
+  background: #DCFCE7;
+  color: #15803D;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Botones Sí / No Evaluación */
+.eval-row {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+}
+
+.btn-yes {
+  flex: 1;
+  background: var(--green-dark);
+  color: white;
+  border: none;
+  border-radius: 28px;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #0F5828;
+}
+
+.btn-no {
+  flex: 1;
+  background: var(--red-sos);
+  color: white;
+  border: none;
+  border-radius: 28px;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--red-dark);
+}
+
+.svg-definitions {
+  display: none;
+}
+
+#frame-b,
+#frame-c {
+  display: none;
+}
+
+.avatar-onboarding {
+  width: 145px;
+  height: 145px;
+}
+
+.avatar-dashboard {
+  width: 155px;
+  height: 155px;
+}
+
+.eval-onboarding {
+  margin: 14px 0 18px;
+}
+
+.greeting-user {
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+.menu-icon {
+  font-size: 30px;
+}
+
+.mic-icon {
+  font-size: 60px;
+}
+
+.mic-icon-response {
+  font-size: 50px;
+  color: white;
+}
+
+.chat-input-row-assistant {
+  margin-bottom: 12px;
+}
+
+.response-listen-label {
+  margin-top: 8px;
+}
+
+.app-icon.whatsapp {
+  background: var(--green);
+}
+
+.app-icon.telegram {
+  background: var(--blue-tg);
+}
+
+.app-icon.instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.app-icon.phone {
+  background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.app-icon.camera {
+  background: linear-gradient(135deg, #6366F1, #4F46E5);
+}
+
+.app-icon.youtube {
+  background: linear-gradient(135deg, #EF4444, #DC2626);
+}
+
+.sim-instruction-bubble {
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+/* Interfaz Realista de Simulación */
+.sim-container-card {
+  background: #FFFFFF;
+  border: 3.5px solid var(--navy);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(15,41,66,0.12);
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-app-bar {
+  background: #075E54;
+  color: #FFFFFF;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background 0.3s;
+}
+
+.sim-app-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-badge-step {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.sim-screen-body {
+  background: #EFEAE2;
+  padding: 16px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.sim-chat-bubble {
+  background: #FFFFFF;
+  border-radius: 14px 14px 14px 2px;
+  padding: 12px 16px;
+  font-size: 18px;
+  color: var(--navy);
+  font-weight: 700;
+  max-width: 88%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  border-left: 5px solid #25D366;
+}
+
+.sim-chat-bubble.out {
+  align-self: flex-end;
+  background: #DCF8C6;
+  border-radius: 14px 14px 2px 14px;
+  border-left: none;
+  border-right: 5px solid #075E54;
+}
+
+.sim-feedback-toast {
+  background: #FEF3C7;
+  border: 2px solid #F59E0B;
+  color: #92400E;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.sim-interactive-footer {
+  background: #FFFFFF;
+  border-top: 2px solid #E2E8F0;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.sim-target-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--red-sos);
+}
+
+.sim-pulse-btn {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 0 0 4px var(--green), 0 8px 18px rgba(37,211,102,0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  animation: pulseTarget 1.4s infinite;
+  transition: transform 0.15s, background 0.3s;
+}
+
+.sim-pulse-btn:active {
+  transform: scale(0.92);
+}
+
+@keyframes pulseTarget {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.config-options {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.config-datetime-card {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.system-datetime {
+  color: #64748B;
+  font-size: 18px;
+}
+
+.config-footer {
+  margin-top: auto;
+}
+
+/* ====================================================
+   ESTILOS PARA SALUD (PASTILLAS), SOS Y PANEL ADMIN
+   ==================================================== */
+.health-card {
+  background: #FFFFFF;
+  border: 2.5px solid #E2E8F0;
+  border-left: 6px solid #10B981;
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 10px;
+}
+
+.health-time-badge {
+  background: #DCFCE7;
+  color: #166534;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.health-med-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
+
+.health-med-desc {
+  font-size: 14px;
+  color: #64748B;
+}
+
+.btn-check-med {
+  background: #10B981;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* SOS Alerta de Emergencia */
+.sos-banner-alert {
+  background: #FEE2E2;
+  border: 3px solid #EF4444;
+  border-radius: 22px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 14px;
+  animation: pulseSos 1.5s infinite;
+}
+
+@keyframes pulseSos {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.sos-contact-card {
+  background: #FFFFFF;
+  border: 3px solid #EF4444;
+  border-radius: 20px;
+  padding: 18px;
+  text-align: center;
+  margin: 12px 0;
+}
+
+.sos-call-btn {
+  background: #EF4444;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 40px;
+  padding: 16px 20px;
+  font-size: 22px;
+  font-weight: 700;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 6px 0 #B91C1C, 0 10px 18px rgba(239,68,68,0.3);
+  margin: 10px 0;
+  text-decoration: none;
+}
+
+/* Panel Gerontológico / Administrador */
+.admin-metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.metric-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.metric-card.highlight {
+  border-color: var(--orange);
+  background: #FFF7ED;
+}
+
+.metric-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
+
+.metric-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.admin-list-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+
+.admin-list-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 14px;
+}
+
+.admin-item-row:last-child {
+  border-bottom: none;
+}
+
+/* Ajustes de tamaño de letra de accesibilidad */
+.font-size-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.font-size-btn {
+  background: var(--white);
+  border: 2.5px solid var(--navy);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--navy);
+}
+
+.font-size-btn.active {
+  background: var(--navy);
+  color: var(--white);
+}
+
+body.font-large h1 { font-size: 35px; }
+body.font-large h2 { font-size: 27px; }
+body.font-large .speech-bubble { font-size: 23px; }
+body.font-large .btn-orange { font-size: 25px; padding: 19px 24px; }
+
+
