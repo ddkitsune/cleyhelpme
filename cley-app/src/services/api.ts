@@ -28,8 +28,8 @@ const STORAGE_KEYS = {
   EVALS: 'cley_evaluations',
 };
 
-// La API Key se inyecta de forma segura mediante variables de entorno en tiempo de compilacion
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+// API Key cargada de forma segura desde variables de entorno locales (.env)
+const GEMINI_API_KEY = (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
 
 // Modelos ordenados por disponibilidad y estabilidad garantizada con esta clave
 const CANDIDATE_MODELS = [

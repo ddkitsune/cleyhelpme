@@ -36,8 +36,6 @@ cley-backend/venv/
 cley-backend/.venv/
 
 # Variables de entorno y secretos
-.env
-.env.local
 .env.*.local
 *.env
 
@@ -48,7 +46,6 @@ cley-backend/.venv/
 
 # Editores e IDEs
 .idea/
-.vscode/
 *.suo
 *.ntvs*
 *.njsproj
@@ -63,3 +60,4 @@ Thumbs.db
 *.tar.gz
 apk/
 
+config.bat
